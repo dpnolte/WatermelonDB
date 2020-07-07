@@ -3,6 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.getPath = getPath;
 exports.default = void 0;
 
 var _Database = _interopRequireDefault(require("./Database"));
@@ -67,12 +68,22 @@ function (_Error2) {
 }(_wrapNativeSuper(Error));
 
 function getPath(dbName) {
-  // If starts with `file:` or contains `/`, it's a path!
-  if (':memory:' === dbName || 0 === dbName.indexOf('file:') || 0 <= dbName.indexOf('/')) {
+  if (':memory:' === dbName || 'file::memory:' === dbName) {
     return dbName;
   }
 
-  return "".concat(process.cwd(), "/").concat(dbName);
+  var path = dbName.startsWith('/') && dbName.startsWith('file:') ? dbName : "".concat(process.cwd(), "/").concat(dbName);
+
+  if (-1 === path.indexOf('.sqlite')) {
+    if (0 <= path.indexOf('?')) {
+      var index = path.indexOf('?');
+      path = "".concat(path.substring(0, index), ".sqlite").concat(path.substring(index));
+    } else {
+      path = "".concat(path, ".sqlite");
+    }
+  }
+
+  return path;
 }
 
 var DatabaseDriver = function DatabaseDriver() {
