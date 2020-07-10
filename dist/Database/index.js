@@ -169,6 +169,20 @@ function () {
 
   _proto.action = function action(work, description) {
     return this._actionQueue.enqueue(work, description);
+  }
+  /* EXPERIMENTAL API - DO NOT USE */
+  ;
+
+  _proto._write = function _write(work, description) {
+    return this._actionQueue.enqueue(work, description);
+  };
+
+  _proto._read = function _read(work, description) {
+    return this._actionQueue.enqueue(work, description);
+  };
+
+  _proto._together = function _together(work, description) {
+    return this._actionQueue.enqueue(work, description);
   } // Emits a signal immediately, and on change in any of the passed tables
   ;
 

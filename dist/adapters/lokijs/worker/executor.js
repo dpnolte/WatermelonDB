@@ -462,7 +462,7 @@ function () {
           _this3._executeCreateTableMigration(step);
         } else if ('add_columns' === step.type) {
           _this3._executeAddColumnsMigration(step);
-        } else {
+        } else if (!('sql' === step.type)) {
           throw new Error("Unsupported migration step ".concat(step.type));
         }
       }); // Set database version
