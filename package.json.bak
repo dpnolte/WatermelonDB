@@ -1,9 +1,27 @@
 {
-  "main": "./dist/index.js",
-  "sideEffects": false,
   "name": "@nozbe/watermelondb",
   "description": "Build powerful React Native and React web apps that scale from hundreds to tens of thousands of records and remain fast",
   "version": "0.18.0",
+  "scripts": {
+    "build": "NODE_ENV=production node ./scripts/make.js",
+    "dev": "NODE_ENV=development node ./scripts/make.js",
+    "dev:native": "react-native start",
+    "release": "node ./scripts/publish.js",
+    "prettier": "prettier-eslint --config ./.prettierrc --write \"./src/**/*.js\"",
+    "flow": "flow check",
+    "eslint": "eslint ./src -c ./.eslintrc.yml --cache --cache-location ./.cache/.eslintcache",
+    "tslint": "tslint --project .",
+    "test": "jest --config=./jest.config.js --forceExit --detectOpenHandles --no-cache",
+    "ci:check": "concurrently 'npm run test' 'npm run eslint' 'npm run flow' --kill-others-on-fail",
+    "test:android": "cd native/androidTest; ./gradlew connectedAndroidTest",
+    "test:ios": "cd native/iosTest; xcodebuild -workspace WatermelonTester.xcworkspace -scheme 'WatermelonTester' -destination 'name=iPhone 8' test",
+    "test:typescript": "cd examples/typescript; yarn; npm run test",
+    "swiftlint": "cd native; swiftlint",
+    "ktlint": "cd native/androidTest; ./gradlew ktlint",
+    "ktlint:format": "cd native/androidTest; ./gradlew ktlintFormat",
+    "android:emulator": "./scripts/emulatorWithJavaCheck",
+    "docs": "./scripts/mdbook"
+  },
   "author": "@Nozbe",
   "homepage": "https://github.com/Nozbe/WatermelonDB#readme",
   "bugs": "https://github.com/Nozbe/WatermelonDB/issues",
@@ -31,7 +49,9 @@
     "rxjs-compat": "^6.3.2",
     "sql-escape-string": "^1.1.0"
   },
-  "publishConfig": {"access": "public"},
+  "publishConfig": {
+    "access": "public"
+  },
   "devDependencies": {
     "@babel/cli": "^7.6.0",
     "@babel/core": "^7.6.0",
